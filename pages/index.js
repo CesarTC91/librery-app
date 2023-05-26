@@ -1,8 +1,8 @@
 import { Heading } from "@chakra-ui/react"
 import Head from "next/head"
 import Navbar from "../components/Navbar"
-import AudioPlayer from "../components/AudioPlayer"
 import DataTableBooks from "../components/DataTableBooks"
+
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
 
       <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Welcome To My Librery App</Heading>
       <Heading textAlign="center" background="whiteAlpha.200" justifyContent="center" display="flex" p={6}>
-        <AudioPlayer  />
+       
       </Heading>
       <Navbar />
 

@@ -28,7 +28,7 @@ export default function AddBook () {
             <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Add Book To Librery App</Heading>
             <Navbar />
 
-            <Flex height="90vh" mt={20} alignItems="center" justifyContent="center">
+            <Flex height="70vh" mt={20} alignItems="center" justifyContent="center">
                 <Flex direction="column" background="gray.100" p={12} rounded={6}>
                     <Heading mb={6} textAlign="center">Add Book To Librery</Heading>
                     <div>

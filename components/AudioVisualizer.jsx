@@ -1,56 +1,97 @@
-import React from "react";
-import { useRef, useEffect } from "react";
-import { styled } from "styled-components";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 
+export const AudioVisualizer = (props) => {
+  const {
+    src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/shoptalk-clip.mp3",
+  } = props;
+  const [audioContext, setAudioContext] = useState(null);
 
-const AudioVisualizerContainer = styled.div`
-    width: 100%;
-    height: 100px;
-    background-color: #f2f2f2;
-    position: relative;
-`;
+  useEffect(() => {
+    const context = new AudioContext();
+    setAudioContext(context);
+  }, []);
 
-const Bar = styled.div`
-    width: 4px;
-    height: 0;
-    background-color: #ff5500;
-    position: absolute;
-    bottom: 0;
-    left: ${props => props.position}px
-    transition: height 0.2s ease;
-`;
+  useEffect(() => {
+    if (audioContext) {
+      drawAudio(src);
+    }
+  }, [audioContext]);
 
-const AudioVisualizer = ({audioData}) => {
-    const barsRef = useRef([]);
+  const drawAudio = (url) => {
+    fetch(url)
+      .then((response) => response.arrayBuffer())
+      .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+      .then((AudioBuffer) => draw(normalizeData(filterData(AudioBuffer))));
+  };
 
-    useEffect(() => {
-        const updateBars = () => {
-            requestAnimationFrame(updateBars);
-            const dataArray = new Uint8Array(audioData.current?.frequencyBinCount);
-            audioData.current?.getByteFrequencyData(dataArray);
-            const step = Math.round(dataArray.length / barsRef.current.length);
+  const filterData = (audioBuffer) => {
+    const rawData = audioBuffer.getChannelData(0);
+    const samples = 70;
+    const blockSize = Math.floor(rawData.length / samples);
+    const filteredData = [];
+    for (let i = 0; i < samples; i++) {
+      let blockStart = blockSize * i;
+      let sum = 0;
+      for (let j = 0; j < blockSize; j++) {
+        sum = sum + Math.abs(rawData[blockStart + j]);
+      }
+      filteredData.push(sum / blockSize);
+    }
+    return filteredData;
+  };
 
+  const normalizeData = (filteredData) => {
+    const multiplier = Math.pow(Math.max(...filteredData), -1);
+    return filteredData.map((data) => data * multiplier);
+  };
 
-            barsRef.current.forEach((bar, index) => {
-                const value = dataArray[index * step] || 0;
-                const height = value / 2;
-                bar.style.height = `${height}px`;
-            });
-        };
-        updateBars();
-    }, [audioData]);
+  const draw = (normalizeData) => {
+    const canvas = document.querySelector("canvas");
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    const padding = 0;
+    canvas.width = canvas.offsetWidth * devicePixelRatio;
+    canvas.height = (canvas.offsetHeight + padding * 2) * devicePixelRatio;
+    const context = canvas.getContext("2d");
+    context.scale(devicePixelRatio, devicePixelRatio);
+    context.translate(0, canvas.offsetHeight / 2 + padding);
 
-    const createBars = () => {
-        const bars = []
-        const barCount = 64; // Numero total de barras
+    const width = canvas.offsetWidth / normalizeData.length;
+    for (let i = 0; i < normalizeData.length; i++) {
+      const x = width * 1;
+      let height = normalizeData[i] * canvas.offsetHeight - padding;
+      if (height < 0) {
+        height = 0;
+      } else if (height > canvas.offsetHeight / 2) {
+        height = height > canvas.offsetHeight / 2;
+      }
+      drawLineSegment(context, x, height, width, (i + 1) % 2);
+    }
+  };
 
-        for(let i = 0; i < barCount; i++){
-            bars.push(<Bar key={i} ref={ref => (barsRef.current[i] = ref)} position={(i * 10) + 2} />)
+  const drawLineSegment = (context, x, y, w, isEven) => {
+    context.lineWidth = 1;
+    context.strokeStyle = "#fff";
+    context.beginPath();
+    y = isEven ? y : -y;
+    context.moveTo(x, 0);
+    context.lineTo(x, y);
+    context.arc(x + w / 2, y, w / 2, Math.PI, 0, isEven);
+    context.lineTo(x + w, 0);
+    context.stroke();
+  };
+
+  return (
+    <div>
+      <canvas id="wave" />
+      {/*language=CSS*/}
+      <style jsx>{`
+        canvas {
+          width: 800px;
+          height: 130px;
+          margin: 2rem auto;
         }
-        return bars;
-    };
-
-    return <AudioVisualizerContainer>{createBars()}</AudioVisualizerContainer>
-}
-
-export default AudioVisualizer
+      `}</style>
+    </div>
+  );
+};

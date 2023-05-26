@@ -11,11 +11,11 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { BsTrash } from "react-icons/bs";
-import { MdEditDocument } from "react-icons/md";
 import { GiBookCover } from "react-icons/gi";
 import {FiArrowDownCircle} from 'react-icons/fi'
 import { useState } from "react";
 import CoversBooks from "../components/CoversBooks";
+import FormUpdateBook from "./FormUpdateBooks";
 
 const booksData = [
   {
@@ -59,10 +59,9 @@ const DataTableBooks = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [coverSelect, setCoverSelect] = useState({})
+  const [coverSelect, setCoverSelect] = useState(false)
 
   const openModal = (book) => {
-    console.log('Cover')
     setIsOpen(true);
     setCoverSelect(book);
   };
@@ -111,9 +110,7 @@ const DataTableBooks = () => {
                     gap={4}
                     justifyContent="flex-end"
                   >
-                    <Button mb={6} colorScheme="blue">
-                      <MdEditDocument />
-                    </Button>
+                     <FormUpdateBook book={book} />
                     <Button mb={6} colorScheme="red">
                       <BsTrash />
                     </Button>
