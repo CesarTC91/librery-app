@@ -16,7 +16,7 @@ import { useState } from "react";
 const FormUpdateBook = ({ book }) => {
   const [openFormUpdate, setOpenFormUpdate] = useState(false);
 
-  const openUpdateForm = (book) => {
+  const openUpdateForm = () => {
     setOpenFormUpdate(true);
   };
 
@@ -34,6 +34,7 @@ const FormUpdateBook = ({ book }) => {
         <ModalContent>
           <ModalHeader>
             <Text
+              textAlign="center"
               mb={6}
               backgroundColor={"whiteAlpha.200"}
               color={"blackAlpha.500"}

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home - Librery App</title>
+        <title>Home - Library App</title>
       </Head>
 
       <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Welcome To My Librery App</Heading>

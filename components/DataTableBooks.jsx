@@ -10,122 +10,94 @@ import {
   Button,
   Grid,
 } from "@chakra-ui/react";
-import { BsTrash } from "react-icons/bs";
-import { GiBookCover } from "react-icons/gi";
-import {FiArrowDownCircle} from 'react-icons/fi'
 import { useState } from "react";
-import CoversBooks from "../components/CoversBooks";
 import FormUpdateBook from "./FormUpdateBooks";
-
-const booksData = [
-  {
-    id: 1,
-    title: "El Tunel de las Almas Perdidas",
-    author: "Mara Urnoba",
-    publicationDate: "10-03-2018",
-    image: "/img/El_Tunel_De_Las_Almas_Perdidas.jpg",
-    publisher: "Independently published",
-  },
-  {
-    id: 2,
-    title: "Cien años de Soledad",
-    author: "Gabriel Garcia Marquez",
-    publicationDate: "05-06-1967",
-    image: "/img/Cien_Años_De_Soledad.jpg",
-    publisher: "Editorial Sudamericana",
-  },
-  {
-    id: 3,
-    title: "Ciudad Medialuna",
-    author: "Sarah J. Maas",
-    publicationDate: "03-03-2020",
-    image: "/img/Ciudad_Medialuna.jpg",
-    publisher: "Alfaguara",
-  },
-  {
-    id: 4,
-    title: "Todo lo que fuimos juntos",
-    author: "Alice Kellen",
-    publicationDate: "14-11-2019",
-    image: "/img/Todo_Lo_Que_Fuimos_Juntos.jpg",
-    publisher: "Editorial Planeta",
-  },
-];
+import DeleteBooks from "./DeleteBooks";
+import { useBookList } from "../hooks/useBook";
 
 
 
 const DataTableBooks = () => {
-  const [filter, setFilter] = useState("");
+  const { loading, error, data, getBooks } = useBookList();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [filter, setFilter] = useState({});
 
-  const [coverSelect, setCoverSelect] = useState(false)
-
-  const openModal = (book) => {
-    setIsOpen(true);
-    setCoverSelect(book);
+  //(e) => filterBookByTitle(e.target.value)
+  const filterBookByTitle = (title) => {
+    setFilter({ ...filter, title: title });
   };
 
+  if (error) {
+    return <p>No data found</p>;
+  }
 
-  const closedModal = () => {
-    setIsOpen(false);
-  };
-
-  const filterBooks = booksData.filter(
-    (book) =>
-      book.author.toLowerCase().includes(filter.toLowerCase()) ||
-      book.title.toLowerCase().includes(filter.toLowerCase()) ||
-      book.publicationDate.toLowerCase().includes(filter.toLowerCase()) ||
-      book.publisher.toLowerCase().includes(filter.toLowerCase())
-  );
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Box>
-      <Input
-        placeholder="Search Book"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        mb={4}
-      />
-      <Table  variant="simple">
+      <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Author</Th>
             <Th>Title of the Book</Th>
-            <Th>Publication Date</Th>
-            <Th>House Publisher of the Book</Th>
+            <Th>Author of the Book</Th>
+            <Th>Book ID</Th>
+          </Tr>
+          <Tr>
+            <Th>
+              <Input
+                placeholder="filter for title"
+                mb={4}
+                value={filter?.title}
+                onChange={(e) => filterBookByTitle(e.target.value)}
+              />
+            </Th>
+            <Th>
+              <Input 
+              placeholder="filter for author" 
+              mb={4}
+              />
+            </Th>
+            <Th>
+              <Input placeholder="filter for id" mb={4} />
+            </Th>
+            <Button
+              mb={4}
+              colorScheme="blue"
+              onClick={() =>
+                getBooks({
+                  variables: {
+                    filters: filter, 
+                  },
+                })
+              }
+            >
+              Filter
+            </Button>
           </Tr>
         </Thead>
         <Tbody>
-          {filterBooks.map((book) => {
-            return (
-              <Tr key={book.id}>
-                <Td>{book.author}</Td>
-                <Td>{book.title}</Td>
-                <Td>{book.publicationDate}</Td>
-                <Td>{book.publisher}</Td>
-                <Td>
-                  <Grid
-                    templateColumns="repeat(4, auto)"
-                    gap={4}
-                    justifyContent="flex-end"
-                  >
-                     <FormUpdateBook book={book} />
-                    <Button mb={6} colorScheme="red">
-                      <BsTrash />
-                    </Button>
-                    <Button onClick={() => openModal(book)} mb={6} colorScheme="teal">
-                      <GiBookCover />
-                      <CoversBooks isOpen={isOpen} cover={coverSelect} closedModal={closedModal} />
-                    </Button>
-                    <Button mb={6} colorScheme="green">
-                        <FiArrowDownCircle />
-                    </Button>
-                  </Grid>
-                </Td>
-              </Tr>
-            );
-          })}
+          {data["Books"] &&
+            data["Books"].map((book) => {
+              return (
+                <Tr key={book._id}>
+                  <Td>{book.title}</Td>
+                  <Td>{book.author.fullName}</Td>
+                  <Td>{book._id}</Td>
+                  <Td>
+                    <Grid
+                      templateColumns="repeat(2, auto)"
+                      gap={5}
+                      justifyContent="flex-end"
+                    >
+                      <FormUpdateBook book={book} />
+                      <DeleteBooks book={book} />
+                    </Grid>
+                  </Td>
+                </Tr>
+              );
+            })}
         </Tbody>
       </Table>
     </Box>

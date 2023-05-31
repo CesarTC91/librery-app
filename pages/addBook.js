@@ -1,36 +1,21 @@
 import Head from "next/head";
 import { Heading, Flex, Input, Button, Text, Textarea } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
-import SearchCoverFile from "../components/UploadFiles";
-import UploadBookFile from "../components/UploadFileBook";
 
 
 export default function AddBook () {
-    const [selectFile, setSelectFile] = useState(null)
-
-    const [selectBookFile, setSelectBookFile] = useState(null)
-
-    const handleFileChange = (file) => {
-        setSelectFile(file);
-    }
-
-    const handleBookChange = (file) => {
-        setSelectBookFile(file)
-    }
-
     return(
         <>
             <Head>
-                <title>Add Book - Librery Appp</title>
+                <title>Add Book - Library Appp</title>
             </Head>
 
-            <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Add Book To Librery App</Heading>
+            <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Add Book To Library App</Heading>
             <Navbar />
 
             <Flex height="70vh" mt={20} alignItems="center" justifyContent="center">
                 <Flex direction="column" background="gray.100" p={12} rounded={6}>
-                    <Heading mb={6} textAlign="center">Add Book To Librery</Heading>
+                    <Heading mb={6} textAlign="center">Add Book To Library</Heading>
                     <div>
                         <Text mb={6}>Book Name</Text>
                         <Input placeholder="Book Name" variant="filled" mb={6} type="text" />

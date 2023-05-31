@@ -7,7 +7,7 @@ export default function Contact() {
     return (
         <>
             <Head>
-                <title>Contact - Librery App</title>
+                <title>Contact - Library App</title>
             </Head>
 
             <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Contact Page - Librery App</Heading>
