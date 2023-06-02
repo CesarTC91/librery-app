@@ -27,7 +27,8 @@
     "react-audio-player": "^0.17.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "styled-components": "^6.0.0-rc.2"
+    "styled-components": "^6.0.0-rc.2",
+    "sweetalert2": "^11.7.10"
   },
   "devDependencies": {
     "eslint": "8.40.0",

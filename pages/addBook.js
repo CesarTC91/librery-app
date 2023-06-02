@@ -1,10 +1,43 @@
 import Head from "next/head";
-import { Heading, Flex, Input, Button, Text, Textarea } from "@chakra-ui/react";
+import { Heading, Flex, Input, Button, Text, Select } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import { useAuthorListByFullname } from '../hooks/useAuthor'
+import { useCreateBook } from "../hooks/useBook";
+import { useState, useEffect } from "react";
 
 
-export default function AddBook () {
-    return(
+export default function AddBook() {
+    const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
+
+    const {getCreateBook, loading: loadingCreate, error: errorCreate, data} = useCreateBook()
+
+    const [book, setBook] = useState({})
+
+    const addBook = (field, value) => {
+        setBook({...book, [field]: value})
+    }
+
+    const savedBook = () => {
+        getCreateBook({
+            variables: {
+                book: book
+            }
+        })
+    }
+
+    useEffect(() => {
+        getAuthorsByFullname()
+    }, [getAuthorsByFullname])
+
+    if(loadingCreate){
+        return <p>Loading Create Book</p>
+    }
+
+    if(errorCreate){
+        return <p>The book could not be created</p>
+    }
+
+    return (
         <>
             <Head>
                 <title>Add Book - Library Appp</title>
@@ -18,25 +51,18 @@ export default function AddBook () {
                     <Heading mb={6} textAlign="center">Add Book To Library</Heading>
                     <div>
                         <Text mb={6}>Book Name</Text>
-                        <Input placeholder="Book Name" variant="filled" mb={6} type="text" />
+                        <Input placeholder="Book Name" variant="filled" mb={6} type="text" onChange={(e) => addBook('title', e.target.value)} />
                     </div>
                     <div>
                         <Text mb={6}>Book Author</Text>
-                        <Input placeholder="Book Author" variant="filled" mb={6} type="text" />
+                        <Select placeholder="Book Author" variant="filled" mb={6} onChange={(e) => addBook('authorId', e.target.value)}>
+                            {authorByFullNameList['Authors'] && authorByFullNameList['Authors'].map((authorFullName, index) => {
+                                console.log(authorFullName)
+                                return <option key={index} value={authorFullName._id}>{authorFullName.fullName}</option>
+                            })}
+                        </Select>
                     </div>
-                    <div>
-                        <Text mb={6}>Date of Publication</Text>
-                        <Input placeholder="Date of Publication" variant="filled" mb={6} type="date" />
-                    </div>
-                    <div>
-                        <Text mb={6}>House publisher of the Book</Text>
-                        <Input placeholder="Publisher of the book" variant="filled" mb={6} type="text" />
-                    </div>
-                    <div>
-                        <Text mb={6}>Description of the Book</Text>
-                        <Textarea mb={6} placeholder="Write the description of the book" />
-                    </div>
-                    <Button mb={6} colorScheme="teal">Add Book</Button>
+                    <Button mb={6} colorScheme="teal" onClick={savedBook}>Add Book</Button>
                 </Flex>
             </Flex>
         </>

@@ -15,8 +15,6 @@ import FormUpdateBook from "./FormUpdateBooks";
 import DeleteBooks from "./DeleteBooks";
 import { useBookList } from "../hooks/useBook";
 
-
-
 const DataTableBooks = () => {
   const { loading, error, data, getBooks } = useBookList();
 
@@ -25,6 +23,11 @@ const DataTableBooks = () => {
   //(e) => filterBookByTitle(e.target.value)
   const filterBookByTitle = (title) => {
     setFilter({ ...filter, title: title });
+  };
+
+
+  const filterBookById = (_id) => {
+    setFilter({ ...filter, _id: _id });
   };
 
   if (error) {
@@ -54,13 +57,12 @@ const DataTableBooks = () => {
               />
             </Th>
             <Th>
-              <Input 
-              placeholder="filter for author" 
-              mb={4}
+              <Input
+                placeholder="filter for id"
+                mb={4}
+                value={filter?._id}
+                onChange={(e) => filterBookById(e.target.value)}
               />
-            </Th>
-            <Th>
-              <Input placeholder="filter for id" mb={4} />
             </Th>
             <Button
               mb={4}
@@ -68,7 +70,7 @@ const DataTableBooks = () => {
               onClick={() =>
                 getBooks({
                   variables: {
-                    filters: filter, 
+                    filters: filter,
                   },
                 })
               }
@@ -83,7 +85,6 @@ const DataTableBooks = () => {
               return (
                 <Tr key={book._id}>
                   <Td>{book.title}</Td>
-                  <Td>{book.author.fullName}</Td>
                   <Td>{book._id}</Td>
                   <Td>
                     <Grid

@@ -10,13 +10,13 @@ export default function Contact() {
                 <title>Contact - Library App</title>
             </Head>
 
-            <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Contact Page - Librery App</Heading>
+            <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Contact Page - Library App</Heading>
             <Navbar />
 
 
             <Container height="100vh" alignItems="center" justifyContent="center">
                 <Container flexDirection="column" background="gray.100" p={12} rounded={6}>
-                    <Heading mb={6} textAlign="center">Contact With Librery</Heading>
+                    <Heading mb={6} textAlign="center">Contact With Library</Heading>
                     <div>
                         <Text mb={6}>Name</Text>
                         <Input placeholder="Name" variant="filled" mb={6} type="text" id="name"  />
