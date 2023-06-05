@@ -1,8 +1,8 @@
 import { Heading } from "@chakra-ui/react"
 import Head from "next/head"
 import Navbar from "../components/Navbar"
-import DataTableBooks from "../components/DataTableBooks"
-import DataTableAuthors from "../components/DataTableAuthors"
+
+
 
 
 export default function Home() {
@@ -17,11 +17,6 @@ export default function Home() {
        
       </Heading>
       <Navbar />
-
-      <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">List of the Books</Heading>
-
-      <DataTableBooks />
-      <DataTableAuthors />
 
     </>
   )
