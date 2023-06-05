@@ -19,7 +19,7 @@ const DeleteBooks = ({ book }) => {
 
   const [filter, setFilter] = useState({})
 
-  const { getDeleteBook, loading, error, data } = useDeleteBook();
+  const { getDeleteBook} = useDeleteBook();
 
   const filterIdBookForDelete =  (_id) => {
       setFilter({...filter, _id: _id})

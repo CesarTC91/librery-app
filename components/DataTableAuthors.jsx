@@ -63,6 +63,7 @@ const DataTableAuthors = () => {
                 onChange={(e) => filterAuthorByLastName(e.target.value)}
               />
             </Th>
+            <Th>
             <Button
               mb={4}
               colorScheme="green"
@@ -76,6 +77,7 @@ const DataTableAuthors = () => {
             >
               Filter Author
             </Button>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -86,6 +88,7 @@ const DataTableAuthors = () => {
                   <Td>{author.fullName}</Td>
                   <Td>{author.firstName}</Td>
                   <Td>{author.lastName}</Td>
+                  <Td>{author._id}</Td>
                   <Td>
                     <Grid
                       templateColumns="repeat(2, auto)"

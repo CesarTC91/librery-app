@@ -5,7 +5,7 @@ import { useCreateAuthor } from '../hooks/useAuthor'
 import { useState } from 'react'
 
 export default function AddAuthor (){
-    const {loading, error, data, getCreateAuthor } = useCreateAuthor();
+    const {loading, error, getCreateAuthor } = useCreateAuthor();
 
     const [author, setAuthor] = useState({})
 

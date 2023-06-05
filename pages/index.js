@@ -1,6 +1,9 @@
-import { Heading } from "@chakra-ui/react"
+import { Heading  } from "@chakra-ui/react"
 import Head from "next/head"
 import Navbar from "../components/Navbar"
+import CardsPhrases from "../components/CardsPhrases"
+
+
 
 
 
@@ -13,11 +16,9 @@ export default function Home() {
       </Head>
 
       <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Welcome To My Library App</Heading>
-      <Heading textAlign="center" background="whiteAlpha.200" justifyContent="center" display="flex" p={6}>
-       
-      </Heading>
       <Navbar />
-
+      
+      <CardsPhrases />
     </>
   )
 }

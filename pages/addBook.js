@@ -50,14 +50,13 @@ export default function AddBook() {
                 <Flex direction="column" background="gray.100" p={12} rounded={6}>
                     <Heading mb={6} textAlign="center">Add Book To Library</Heading>
                     <div>
-                        <Text mb={6}>Book Name</Text>
-                        <Input placeholder="Book Name" variant="filled" mb={6} type="text" onChange={(e) => addBook('title', e.target.value)} />
+                        <Text mb={6}>Book Title</Text>
+                        <Input placeholder="Book Title" variant="filled" mb={6} type="text" onChange={(e) => addBook('title', e.target.value)} />
                     </div>
                     <div>
                         <Text mb={6}>Book Author</Text>
                         <Select placeholder="Book Author" variant="filled" mb={6} onChange={(e) => addBook('authorId', e.target.value)}>
                             {authorByFullNameList['Authors'] && authorByFullNameList['Authors'].map((authorFullName, index) => {
-                                console.log(authorFullName)
                                 return <option key={index} value={authorFullName._id}>{authorFullName.fullName}</option>
                             })}
                         </Select>

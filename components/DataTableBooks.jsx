@@ -64,6 +64,7 @@ const DataTableBooks = () => {
                 onChange={(e) => filterBookById(e.target.value)}
               />
             </Th>
+            <Th>
             <Button
               mb={4}
               colorScheme="blue"
@@ -77,6 +78,7 @@ const DataTableBooks = () => {
             >
               Filter
             </Button>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -85,6 +87,7 @@ const DataTableBooks = () => {
               return (
                 <Tr key={book._id}>
                   <Td>{book.title}</Td>
+                  <Td>{book.author.fullName}</Td>
                   <Td>{book._id}</Td>
                   <Td>
                     <Grid

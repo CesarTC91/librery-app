@@ -6,8 +6,12 @@ const libraryService = {
 }
 
 
+
 export const apolloSettings = {
   services: [
     libraryService,
-  ]
+  ], 
+  memoryCacheSettings: {
+    addTypename: false
+  }
 }

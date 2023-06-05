@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsTrash } from "react-icons/bs";
+import { useDeleteAuthors } from "../hooks/useAuthor";
 import {
   Modal,
   ModalHeader,
@@ -10,10 +11,19 @@ import {
   Text,
   Button,
   Flex,
+  Input
 } from "@chakra-ui/react";
 
 const AuthorDelete = ({ author }) => {
   const [openDeleteAuthor, setOpenDeleteAuthor] = useState(false);
+
+  const {getDeleteAuthor} = useDeleteAuthors()
+
+  const [filter, setFilter] = useState({})
+
+  const filterAuthorByIdForDelete = (_id) => {
+    setFilter({...filter, _id: _id})
+  }
 
   const openAuthorDelete = () => {
     setOpenDeleteAuthor(true);
@@ -45,6 +55,13 @@ const AuthorDelete = ({ author }) => {
           <ModalBody>
             <Flex height="70vh" alignItems="center" justifyContent="center">
               <Flex direction="column" background="gray.100" p={12} rounded={6}>
+                <Input 
+                alignItems="center"
+                mb={6}
+                variant="filled"
+                value={filter?._id}
+                onChange={(e) => filterAuthorByIdForDelete(e.target.value)}
+                />
                 <div>
                   <Button
                     alignItems="center"
@@ -52,6 +69,13 @@ const AuthorDelete = ({ author }) => {
                     p={5}
                     ml={2}
                     colorScheme="red"
+                    onClick={() => {
+                      getDeleteAuthor({
+                        variables: {
+                          id: filter._id
+                        }
+                      })
+                    }}
                   >
                     Delete Author
                   </Button>

@@ -9,11 +9,42 @@ import {
   Input,
   Button,
   Text,
+  Select,
 } from "@chakra-ui/react";
 import { MdEditDocument } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUpdateBook } from "../hooks/useBook";
+import { useAuthorListByFullname } from "../hooks/useAuthor";
 
 const FormUpdateBook = ({ book }) => {
+  const { getUpdateBook } = useUpdateBook();
+
+  const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
+
+  const [updateBook, setUpdateBook] = useState({});
+
+  const [selectBook, setSelectBook] = useState({})
+
+  useEffect(() => {
+    getAuthorsByFullname()
+}, [getAuthorsByFullname])
+
+  const bookUpdate = (field, value) => {
+    setUpdateBook({ ...updateBook, [field]: value });
+  };
+
+  const bookSelect = (field, value) => {
+    setSelectBook({...selectBook, [field]: value})
+  }
+
+  const bkUpdate = () => {
+    getUpdateBook({
+      variables: {
+        book: updateBook,
+      },
+    });
+  };
+
   const [openFormUpdate, setOpenFormUpdate] = useState(false);
 
   const openUpdateForm = () => {
@@ -46,24 +77,46 @@ const FormUpdateBook = ({ book }) => {
             <Flex height="70vh" alignItems="center" justifyContent="center">
               <Flex direction="column" background="gray.100" p={12} rounded={6}>
                 <div>
-                  <Text mb={6}>Book Name</Text>
+                  <Text mb={6}>Id of the Book</Text>
                   <Input
-                    placeholder="Book Name"
+                    placeholder="Id"
                     variant="filled"
                     mb={6}
                     type="text"
+                    onChange={(e) => bookUpdate("_id", e.target.value)}
                   />
                 </div>
                 <div>
-                  <Text mb={6}>Author</Text>
+                  <Text mb={6}>Book Title</Text>
                   <Input
-                    placeholder="Author"
+                    placeholder="Book Title"
                     variant="filled"
                     mb={6}
                     type="text"
+                    onChange={(e) => bookUpdate("title", e.target.value)}
                   />
                 </div>
-                <Button mb={6} colorScheme="teal">
+                <div>
+                  <Text mb={6}>Book Author</Text>
+                  <Select
+                    placeholder="Book Author"
+                    variant="filled"
+                    mb={6}
+                    onChange={(e) => bookSelect("authorId", e.target.value)}
+                  >
+                    {authorByFullNameList["Authors"] &&
+                      authorByFullNameList["Authors"].map(
+                        (authorFullName, index) => {
+                          return (
+                            <option key={index} value={authorFullName._id}>
+                              {authorFullName.fullName}
+                            </option>
+                          );
+                        }
+                      )}
+                  </Select>
+                </div>
+                <Button mb={6} colorScheme="teal" onClick={bkUpdate}>
                   Update Book
                 </Button>
               </Flex>
