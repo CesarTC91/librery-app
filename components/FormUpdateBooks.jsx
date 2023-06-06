@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import { useUpdateBook } from "../hooks/useBook";
 import { useAuthorListByFullname } from "../hooks/useAuthor";
 
-const FormUpdateBook = ({ book }) => {
+const FormUpdateBook = ({ book, getBooks }) => {
   const { getUpdateBook } = useUpdateBook();
 
   const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
@@ -37,12 +37,13 @@ const FormUpdateBook = ({ book }) => {
     setSelectBook({...selectBook, [field]: value})
   }
 
-  const bkUpdate = () => {
-    getUpdateBook({
+  const bkUpdate = async () => {
+    await getUpdateBook({
       variables: {
         book: updateBook,
       },
-    });
+    }).then(getBooks)
+    closedUpdateForm()
   };
 
   const [openFormUpdate, setOpenFormUpdate] = useState(false);

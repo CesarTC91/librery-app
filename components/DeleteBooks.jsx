@@ -14,7 +14,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const DeleteBooks = ({ book }) => {
+const DeleteBooks = ({ book, getBooks }) => {
   const [openDeleteBook, setOpenDeleteBook] = useState(false);
 
   const [filter, setFilter] = useState({})
@@ -32,6 +32,15 @@ const DeleteBooks = ({ book }) => {
   const closedBookDelete = () => {
     setOpenDeleteBook(false);
   };
+
+  const dltBook = async () => {
+    await getDeleteBook({
+      variables: {
+        id: filter._id
+      }
+    }).then(getBooks)
+    closedBookDelete()
+  }
 
   return (
     <>
@@ -69,13 +78,7 @@ const DeleteBooks = ({ book }) => {
                     p={5}
                     mb={7}
                     ml={2}
-                    onClick={() => {
-                      getDeleteBook({
-                        variables: {
-                          id: filter._id
-                        }
-                      })
-                    }}
+                    onClick={dltBook}
                   >
                     Delete Book
                   </Button>

@@ -4,39 +4,39 @@ import { useEffect } from "react"
 
 //Hook para carga la data de todos los Authors
 export const useAuthorList = () => {
-    const [getAuthors, {loading, error, data={}}] = useLazyQuery(AUTHOR_LIST)
+    const [getAuthors, { loading, error, data = {}, refetch }] = useLazyQuery(AUTHOR_LIST)
 
     useEffect(() => {
         getAuthors()
     }, [getAuthors])
 
-    return {loading, error, data, getAuthors}
+    return { loading, error, data, getAuthors, refetch }
 }
 
 // Hook para crear Authors 
 export const useCreateAuthor = () => {
-    const [getCreateAuthor, {loading, error, data}] = useMutation(CREATE_AUTHOR)
+    const [getCreateAuthor, { loading, error, data }] = useMutation(CREATE_AUTHOR)
 
-    return {getCreateAuthor, loading, error, data}
+    return { getCreateAuthor, loading, error, data }
 }
 
 //Hook para actualizar Authors
 export const useUpdateAuthors = () => {
-    const [getUpdateAuthor, {loading, error, data}] = useMutation(UPDATE_AUTHOR)
+    const [getUpdateAuthor, { loading, error, data }] = useMutation(UPDATE_AUTHOR)
 
-    return {getUpdateAuthor, loading, error, data}
+    return { getUpdateAuthor, loading, error, data }
 }
 
 //Hook para eleminar Authors
 export const useDeleteAuthors = () => {
-    const [getDeleteAuthor, {loading, error, data}] = useMutation(DELETE_AUTHOR)
+    const [getDeleteAuthor, { loading, error, data, }] = useMutation(DELETE_AUTHOR)
 
-    return {getDeleteAuthor, loading, error, data}
+    return { getDeleteAuthor, loading, error, data }
 }
 
 //Hook para llamar a todos los Authors por su FullName
 export const useAuthorListByFullname = () => {
-    const [getAuthorsByFullname, {loading, error, data={}}] = useLazyQuery(AUTHOR_LIST_BY_FULLNAME)
+    const [getAuthorsByFullname, { loading, error, data = {} }] = useLazyQuery(AUTHOR_LIST_BY_FULLNAME)
 
-    return {getAuthorsByFullname, loading, error, data}
+    return { getAuthorsByFullname, loading, error, data }
 }

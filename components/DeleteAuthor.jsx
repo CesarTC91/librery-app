@@ -14,7 +14,7 @@ import {
   Input
 } from "@chakra-ui/react";
 
-const AuthorDelete = ({ author }) => {
+const AuthorDelete = ({ author, getAuthors }) => {
   const [openDeleteAuthor, setOpenDeleteAuthor] = useState(false);
 
   const {getDeleteAuthor} = useDeleteAuthors()
@@ -32,6 +32,16 @@ const AuthorDelete = ({ author }) => {
   const closedAuthorDelete = () => {
     setOpenDeleteAuthor(false);
   };
+
+  const dltAuthor = async () => {
+    console.log('RRRR')
+    getDeleteAuthor({
+      variables: {
+        id: filter._id
+      }
+    }).then(getAuthors)
+    closedAuthorDelete()
+  }
 
   return (
     <>
@@ -69,13 +79,7 @@ const AuthorDelete = ({ author }) => {
                     p={5}
                     ml={2}
                     colorScheme="red"
-                    onClick={() => {
-                      getDeleteAuthor({
-                        variables: {
-                          id: filter._id
-                        }
-                      })
-                    }}
+                    onClick={dltAuthor}
                   >
                     Delete Author
                   </Button>

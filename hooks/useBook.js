@@ -4,14 +4,14 @@ import { useEffect } from 'react';
 
 
 export const useBookList = () => {
-    const [getBooks, { loading, error, data={} }] = useLazyQuery(BOOK_LIST);
+    const [getBooks, { loading, error, data={}, refetch }] = useLazyQuery(BOOK_LIST);
 
     useEffect(() => {
         getBooks()
     }, [getBooks])
 
-    console.log(data)
-    return {loading, error, data, getBooks}
+   
+    return {loading, error, data, getBooks, refetch}
     
 }
 

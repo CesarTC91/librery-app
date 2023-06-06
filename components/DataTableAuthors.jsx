@@ -16,10 +16,9 @@ import { useAuthorList } from "../hooks/useAuthor";
 import { useState } from "react";
 
 const DataTableAuthors = () => {
-  const { loading, error, data, getAuthors } = useAuthorList();
+  const { loading, error, data, getAuthors, refetch } = useAuthorList();
 
   const [filter, setFilter] = useState({});
-
 
   const filterAuthorByFirstName = (firstName) => {
     setFilter({ ...filter, firstName: firstName });
@@ -64,19 +63,19 @@ const DataTableAuthors = () => {
               />
             </Th>
             <Th>
-            <Button
-              mb={4}
-              colorScheme="green"
-              onClick={() =>
-                getAuthors({
-                  variables: {
-                    filters: filter,
-                  },
-                })
-              }
-            >
-              Filter Author
-            </Button>
+              <Button
+                mb={4}
+                colorScheme="green"
+                onClick={() =>
+                  getAuthors({
+                    variables: {
+                      filters: filter,
+                    },
+                  })
+                }
+              >
+                Filter Author
+              </Button>
             </Th>
           </Tr>
         </Thead>
@@ -95,8 +94,8 @@ const DataTableAuthors = () => {
                       gap={5}
                       justifyContent="flex-end"
                     >
-                      <UpdateAuthor author={author} />
-                      <AuthorDelete author={author} />
+                      <UpdateAuthor getAuthors={refetch} author={author} />
+                      <AuthorDelete getAuthors={refetch} author={author} />
                     </Grid>
                   </Td>
                 </Tr>

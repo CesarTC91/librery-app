@@ -16,7 +16,7 @@ import DeleteBooks from "./DeleteBooks";
 import { useBookList } from "../hooks/useBook";
 
 const DataTableBooks = () => {
-  const { loading, error, data, getBooks } = useBookList();
+  const { loading, error, data, getBooks, refetch } = useBookList();
 
   const [filter, setFilter] = useState({});
 
@@ -95,8 +95,8 @@ const DataTableBooks = () => {
                       gap={5}
                       justifyContent="flex-end"
                     >
-                      <FormUpdateBook book={book} />
-                      <DeleteBooks book={book} />
+                      <FormUpdateBook getBooks={refetch} book={book} />
+                      <DeleteBooks getBooks={refetch} book={book} />
                     </Grid>
                   </Td>
                 </Tr>
