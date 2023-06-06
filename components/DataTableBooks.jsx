@@ -82,8 +82,8 @@ const DataTableBooks = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data["Books"] &&
-            data["Books"].map((book) => {
+          {data["Book"] &&
+            data["Book"].map((book) => {
               return (
                 <Tr key={book._id}>
                   <Td>{book.title}</Td>

@@ -1,8 +1,8 @@
 import {gql} from '@apollo/client'
 
 export const BOOK_LIST = gql`
-    query Books($filters: Book_filters) {
-        Books(filters: $filters) {
+    query Book($filters: Book_filters) {
+        Book(filters: $filters) {
             _id
             title
             author{
