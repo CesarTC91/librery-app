@@ -4,36 +4,61 @@ import Navbar from "../components/Navbar";
 import { useAuthorListByFullname } from '../hooks/useAuthor'
 import { useCreateBook } from "../hooks/useBook";
 import { useState, useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 
 
 export default function AddBook() {
     const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
 
-    const {getCreateBook, loading: loadingCreate, error: errorCreate, data} = useCreateBook()
+    const toast = useToast()
+  
+    const { getCreateBook, loading: loadingCreate, error: errorCreate, data } = useCreateBook()
 
     const [book, setBook] = useState({})
 
     const addBook = (field, value) => {
-        setBook({...book, [field]: value})
+        setBook({ ...book, [field]: value })
     }
 
-    const savedBook = () => {
-        getCreateBook({
+    const savedBook = async () => {
+       const res = await getCreateBook({
             variables: {
                 book: book
             }
         })
+        if(res){
+            if(res.errors){
+                toast({
+                    title: 'THE_BOOK_COULD_NOT_BE_ADDED', 
+                    description: `${res.message}`,
+                    status: 'error',
+                    duration:1500,
+                    isClosable: true,
+                    position: 'top'
+                })
+            }else{
+                toast({
+                    title: 'SUCCESS',
+                    description: 'THE_BOOK_IS_ADDED', 
+                    status: 'success',
+                    duration:1500, 
+                    isClosable: true,
+                    position: 'top'
+                })
+            }
+        }
     }
+
 
     useEffect(() => {
         getAuthorsByFullname()
     }, [getAuthorsByFullname])
 
-    if(loadingCreate){
+    if (loadingCreate) {
         return <p>Loading Create Book</p>
     }
 
-    if(errorCreate){
+    if (errorCreate) {
         return <p>The book could not be created</p>
     }
 

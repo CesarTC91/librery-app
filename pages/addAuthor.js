@@ -3,9 +3,12 @@ import { Heading, Flex, Input, Text, Button } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
 import { useCreateAuthor } from '../hooks/useAuthor'
 import { useState } from 'react'
+import { useToast } from '@chakra-ui/react'
 
 export default function AddAuthor (){
     const {loading, error, getCreateAuthor } = useCreateAuthor();
+
+    const toast = useToast()
 
     const [author, setAuthor] = useState({})
 
@@ -21,12 +24,33 @@ export default function AddAuthor (){
         setAuthor({...author, [field]: value})
     }
 
-    const savedAuthor = () => {
-        getCreateAuthor({
+    const savedAuthor = async () => {
+      const res = await getCreateAuthor({
             variables: {
                 author: author
             }
         })
+        if(res){
+            if(res.errors){
+                toast({
+                    title: 'THE_AUTHOR_COULD_NOT_BE_ADDED',
+                    description: `${res.message}`, 
+                    status: 'error', 
+                    duration: 1500,
+                    isClosable: true,
+                    position: 'top'
+                })
+            }else{
+                toast({
+                    title: 'SUCCESS', 
+                    description: 'THE_AUTHOR_WAS_ADDED', 
+                    status: 'success',
+                    duration:1500,
+                    isClosable: true, 
+                    position: 'top'
+                })
+            }
+        }
     }
 
     return (
