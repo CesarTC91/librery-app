@@ -80,8 +80,8 @@ const DataTableAuthors = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data["Authors"] &&
-            data["Authors"].map((author) => {
+          {data["Author"] &&
+            data["Author"].map((author) => {
               return (
                 <Tr key={author._id}>
                   <Td>{author.fullName}</Td>

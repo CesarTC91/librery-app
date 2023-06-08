@@ -3,8 +3,8 @@ import { gql } from '@apollo/client'
 
 //Función para listar a todos los Authors que se encuentran en la DB 
 export const AUTHOR_LIST = gql`
-    query Authors($filters: Author_filters) {
-        Authors(filters: $filters) {
+    query Author($filters: Author_filters) {
+        Author(filters: $filters) {
             _id
             fullName
             firstName
@@ -43,8 +43,8 @@ export const DELETE_AUTHOR = gql`
 
 //Función que me sirve para llenar un Select con el listado de los Authors por su FullName
 export const AUTHOR_LIST_BY_FULLNAME = gql`
-    query Authors($filters: Author_filters){
-        Authors(filters: $filters){
+    query Author($filters: Author_filters){
+        Author(filters: $filters){
             fullName
             _id
         }

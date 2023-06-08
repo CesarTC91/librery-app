@@ -54,12 +54,12 @@ export default function AddBook() {
         getAuthorsByFullname()
     }, [getAuthorsByFullname])
 
-    if (loadingCreate) {
-        return <p>Loading Create Book</p>
+    if(loadingCreate){
+        return <p>Creating The Book Data</p>
     }
 
-    if (errorCreate) {
-        return <p>The book could not be created</p>
+    if(errorCreate){
+        return <p>Error Creating Book Data</p>
     }
 
     return (
@@ -81,7 +81,7 @@ export default function AddBook() {
                     <div>
                         <Text mb={6}>Book Author</Text>
                         <Select placeholder="Book Author" variant="filled" mb={6} onChange={(e) => addBook('authorId', e.target.value)}>
-                            {authorByFullNameList['Authors'] && authorByFullNameList['Authors'].map((authorFullName, index) => {
+                            {authorByFullNameList['Author'] && authorByFullNameList['Author'].map((authorFullName, index) => {
                                 return <option key={index} value={authorFullName._id}>{authorFullName.fullName}</option>
                             })}
                         </Select>

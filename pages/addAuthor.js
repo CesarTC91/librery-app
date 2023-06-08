@@ -6,19 +6,13 @@ import { useState } from 'react'
 import { useToast } from '@chakra-ui/react'
 
 export default function AddAuthor (){
-    const {loading, error, getCreateAuthor } = useCreateAuthor();
+    const { getCreateAuthor, loading, error } = useCreateAuthor();
 
     const toast = useToast()
 
     const [author, setAuthor] = useState({})
 
-    if(loading){
-        return <p>Loading Data..</p>
-    }
-
-    if(error){
-        return <p>Cant save author</p>
-    }
+ 
 
     const addAuthor = (field, value) => {
         setAuthor({...author, [field]: value})
@@ -51,6 +45,14 @@ export default function AddAuthor (){
                 })
             }
         }
+    }
+
+    if(loading){
+        return <p>Creating author data</p>
+    }
+
+    if(error){
+        return <p>The Authors Data Was Not Created</p>
     }
 
     return (
