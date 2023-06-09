@@ -35,6 +35,7 @@ const CardsPhrases = () => {
             </CardFooter>
           </Card>
         </Box>
+
         <Box mr={4}>
           <Card maxW="sm" display="flex" flexDirection="row">
             <CardBody>
@@ -56,6 +57,7 @@ const CardsPhrases = () => {
             </CardFooter>
           </Card>
         </Box>
+        
         <Box mr={4}>
           <Card maxW="sm" display="flex" flexDirection="row">
             <CardBody>

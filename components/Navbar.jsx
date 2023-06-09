@@ -1,15 +1,44 @@
 import Link from "next/link"
-import styles from '../styles/Navbar.module.css'
+
 
 const Navbar = () => {
     return(
         <>
-            <ul className={styles.navbar}>
-                <Link className={styles.link} href="/">Home</Link>
-                <Link className={styles.link} href="/addBook">Add Book</Link>
-                <Link className={styles.link} href="/addAuthor">Add Author</Link>
-                <Link className={styles.link} href="/bookList">Book List</Link>
-                <Link className={styles.link} href="/authorList">Author List</Link>
+            <ul className="navbar">
+                <Link className="link" href="/">Home</Link>
+                <Link className="link" href="/addBook">Add Book</Link>
+                <Link className="link" href="/addAuthor">Add Author</Link>
+                <Link className="link" href="/bookList">Book List</Link>
+                <Link className="link" href="/authorList">Author List</Link>
+                {/*language=CSS*/}
+                <style jsx global>
+                    {`
+                        .navbar {
+                            font-size: 18px;
+                            font-family: 'Courier New', Courier, monospace;
+                            display: flex;
+                            background-color: #ffffff;
+                            justify-content: center;
+                            padding: 20px;
+                            margin: 10px;
+                            border-radius: 10px;
+                            gap: 10px;
+                        }
+                        
+                        .link {
+                            color: #000000;
+                            text-decoration: none;
+                            padding: 5px 10px;
+                            border-radius: 5px;
+                            margin: 10px;
+                            margin-left: 5;
+                        }
+                        
+                        .link:hover{
+                            background-color: #2f95a5;
+                        }
+                    `}
+                </style>
             </ul>
         </>
     )
