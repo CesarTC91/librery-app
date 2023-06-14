@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from "@apollo/client"
-import { AUTHOR_LIST, CREATE_AUTHOR, AUTHOR_LIST_BY_FULLNAME, UPDATE_AUTHOR, DELETE_AUTHOR, DELETE_ALL_AUTHORS } from "../graphql/Author"
+import { AUTHOR_LIST, CREATE_AUTHOR, AUTHOR_LIST_BY_FULLNAME, UPDATE_AUTHOR, DELETE_AUTHOR } from "../graphql/Author"
 import { useEffect } from "react"
 
 //Hook para carga la data de todos los Authors
