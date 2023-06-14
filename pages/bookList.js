@@ -1,7 +1,7 @@
 import { Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import DataTableBooks from "../components/DataTableBooks"
+import ContainerListBook from "../components/ContainerListBook";
 
 export default function BookList () {
     return (
@@ -14,7 +14,7 @@ export default function BookList () {
             <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">List of the Books in Library App</Heading>
             <Navbar />
 
-            <DataTableBooks />
+            <ContainerListBook />
         </>
     )
 }

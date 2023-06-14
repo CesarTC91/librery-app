@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { BsTrash } from "react-icons/bs";
 import { useDeleteAuthors } from "../hooks/useAuthor";
 import {
   Modal,
@@ -11,45 +9,25 @@ import {
   Text,
   Button,
   Flex,
-  Input
 } from "@chakra-ui/react";
 
-const AuthorDelete = ({ author, getAuthors }) => {
-  const [openDeleteAuthor, setOpenDeleteAuthor] = useState(false);
-
+const AuthorDelete = ({ authorSelected, refreshList, openAuthorDelete, closedAuthorDelete }) => {
+  
   const {getDeleteAuthor} = useDeleteAuthors()
 
-  const [filter, setFilter] = useState({})
-
-  const filterAuthorByIdForDelete = (_id) => {
-    setFilter({...filter, _id: _id})
-  }
-
-  const openAuthorDelete = () => {
-    setOpenDeleteAuthor(true);
-  };
-
-  const closedAuthorDelete = () => {
-    setOpenDeleteAuthor(false);
-  };
-
   const dltAuthor = async () => {
-    console.log('RRRR')
     getDeleteAuthor({
       variables: {
-        id: filter._id
+        id: [authorSelected?._id]
       }
-    }).then(getAuthors)
+    }).then(refreshList)
     closedAuthorDelete()
   }
 
   return (
     <>
-      <Button onClick={() => openAuthorDelete(author)} mb={6} colorScheme="red">
-        <BsTrash />
-      </Button>
 
-      <Modal isOpen={openDeleteAuthor} onClose={closedAuthorDelete}>
+      <Modal isOpen={openAuthorDelete} onClose={closedAuthorDelete}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -65,13 +43,6 @@ const AuthorDelete = ({ author, getAuthors }) => {
           <ModalBody>
             <Flex height="70vh" alignItems="center" justifyContent="center">
               <Flex direction="column" background="gray.100" p={12} rounded={6}>
-                <Input 
-                alignItems="center"
-                mb={6}
-                variant="filled"
-                value={filter?._id}
-                onChange={(e) => filterAuthorByIdForDelete(e.target.value)}
-                />
                 <div>
                   <Button
                     alignItems="center"

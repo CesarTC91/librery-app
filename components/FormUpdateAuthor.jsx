@@ -10,21 +10,10 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
-import { MdEditDocument } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateAuthors } from "../hooks/useAuthor";
 
-const UpdateAuthor = ({ author, getAuthors }) => {
-  const [openUpdateAuthor, setOpenUpdateAuthor] = useState(false);
-
-  const openAuthorUpdateForm = () => {
-    setOpenUpdateAuthor(true);
-  };
-
-  const closedAuthorUpdateForm = () => {
-    setOpenUpdateAuthor(false);
-  };
-
+const UpdateAuthor = ({ auhtorSelected, refreshList, openAuthorUpdateForm, closedAuthorUpdateForm }) => {
   const { getUpdateAuthor } = useUpdateAuthors();
 
   const [updateAuthor, setUpdateAuthor] = useState({});
@@ -38,21 +27,21 @@ const UpdateAuthor = ({ author, getAuthors }) => {
       variables: {
         author: updateAuthor,
       },
-    }).then(getAuthors);
+    }).then(refreshList);
     closedAuthorUpdateForm();
   };
 
+  useEffect(() => {
+    setUpdateAuthor({
+      _id: auhtorSelected?._id, 
+      firstName: auhtorSelected?.firstName,
+      lastName: auhtorSelected?.lastName
+    })
+  }, [auhtorSelected?._id])
+
   return (
     <>
-      <Button
-        onClick={() => openAuthorUpdateForm(author)}
-        mb={6}
-        colorScheme="blue"
-      >
-        <MdEditDocument />
-      </Button>
-
-      <Modal isOpen={openUpdateAuthor} onClose={closedAuthorUpdateForm}>
+      <Modal isOpen={openAuthorUpdateForm} onClose={closedAuthorUpdateForm}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -73,6 +62,7 @@ const UpdateAuthor = ({ author, getAuthors }) => {
                   <Input
                     placeholder="Id of the Author"
                     variant="filled"
+                    value={authorUpdate?._id}
                     mb={6}
                     type="text"
                     onChange={(e) => authorUpdate("_id", e.target.value)}

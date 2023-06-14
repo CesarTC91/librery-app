@@ -11,18 +11,15 @@ import {
   Text,
   Select,
 } from "@chakra-ui/react";
-import { MdEditDocument } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { useUpdateBook } from "../hooks/useBook";
 import { useAuthorListByFullname } from "../hooks/useAuthor";
 
-const FormUpdateBook = ({ book, getBooks }) => {
+const FormUpdateBook = ({ bookSelected, refreshList, openFormUpdate, closedUpdateForm  }) => {
   const { getUpdateBook } = useUpdateBook();
 
   const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
-
   const [updateBook, setUpdateBook] = useState({});
-
   const [selectBook, setSelectBook] = useState({})
 
   useEffect(() => {
@@ -42,25 +39,22 @@ const FormUpdateBook = ({ book, getBooks }) => {
       variables: {
         book: updateBook,
       },
-    }).then(getBooks)
+    }).then(refreshList)
     closedUpdateForm()
   };
 
-  const [openFormUpdate, setOpenFormUpdate] = useState(false);
-
-  const openUpdateForm = () => {
-    setOpenFormUpdate(true);
-  };
-
-  const closedUpdateForm = () => {
-    setOpenFormUpdate(false);
-  };
+  useEffect(() =>{
+    setUpdateBook({
+      _id: bookSelected?._id,
+      title: bookSelected?.title
+    })
+    setSelectBook({
+      authorId: bookSelected?.authorId
+    })
+  }, [bookSelected?._id])
 
   return (
     <>
-      <Button onClick={() => openUpdateForm(book)} mb={6} colorScheme="blue">
-        <MdEditDocument />
-      </Button>
       <Modal isOpen={openFormUpdate} onClose={closedUpdateForm}>
         <ModalOverlay />
         <ModalContent>
@@ -82,6 +76,7 @@ const FormUpdateBook = ({ book, getBooks }) => {
                   <Input
                     placeholder="Id"
                     variant="filled"
+                    value={updateBook?._id}
                     mb={6}
                     type="text"
                     onChange={(e) => bookUpdate("_id", e.target.value)}
@@ -92,6 +87,7 @@ const FormUpdateBook = ({ book, getBooks }) => {
                   <Input
                     placeholder="Book Title"
                     variant="filled"
+                    value={updateBook?.title}
                     mb={6}
                     type="text"
                     onChange={(e) => bookUpdate("title", e.target.value)}
@@ -102,11 +98,12 @@ const FormUpdateBook = ({ book, getBooks }) => {
                   <Select
                     placeholder="Book Author"
                     variant="filled"
+                    value={selectBook?.authorId}
                     mb={6}
                     onChange={(e) => bookSelect("authorId", e.target.value)}
                   >
-                    {authorByFullNameList["Authors"] &&
-                      authorByFullNameList["Authors"].map(
+                    {authorByFullNameList["Author"] &&
+                      authorByFullNameList["Author"].map(
                         (authorFullName, index) => {
                           return (
                             <option key={index} value={authorFullName._id}>

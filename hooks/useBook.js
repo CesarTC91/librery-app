@@ -1,5 +1,5 @@
 import {useLazyQuery, useMutation} from '@apollo/client'
-import { BOOK_LIST, CREATE_BOOK, DELETE_BOOK, UPDATE_BOOK} from '../graphql/Book'
+import { BOOK_LIST, CREATE_BOOK, DELETE_BOOK, UPDATE_BOOK, DELETE_ALL_BOOKS} from '../graphql/Book'
 import { useEffect } from 'react';
 
 
@@ -31,4 +31,10 @@ export const useDeleteBook = () => {
     const [getDeleteBook, {loading, error, data}] = useMutation(DELETE_BOOK)
 
     return {getDeleteBook, loading, error, data}
+}
+
+export const useDeleteAllBooks = () => {
+    const [getDeleteAllBooks, {loading, error, data}] = useMutation(DELETE_ALL_BOOKS)
+
+    return {getDeleteAllBooks, loading, error, data}
 }

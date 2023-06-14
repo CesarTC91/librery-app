@@ -14,39 +14,23 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const DeleteBooks = ({ book, getBooks }) => {
-  const [openDeleteBook, setOpenDeleteBook] = useState(false);
-
-  const [filter, setFilter] = useState({})
-
+const DeleteBooks = ({  bookSelected, refreshList, openDeleteBook, closedBookDelete }) => {
+  
   const { getDeleteBook} = useDeleteBook();
 
-  const filterIdBookForDelete =  (_id) => {
-      setFilter({...filter, _id: _id})
-  }
 
-  const openBookDelete = () => {
-    setOpenDeleteBook(true);
-  };
-
-  const closedBookDelete = () => {
-    setOpenDeleteBook(false);
-  };
 
   const dltBook = async () => {
     await getDeleteBook({
       variables: {
-        id: filter._id
+        id: [bookSelected?._id]
       }
-    }).then(getBooks)
+    }).then(refreshList)
     closedBookDelete()
   }
 
   return (
     <>
-      <Button onClick={() => openBookDelete(book)} mb={6} colorScheme="red">
-        <BsTrash />
-      </Button>
       <Modal isOpen={openDeleteBook} onClose={closedBookDelete}>
         <ModalOverlay />
         <ModalContent>
@@ -63,14 +47,6 @@ const DeleteBooks = ({ book, getBooks }) => {
           <ModalBody>
             <Flex height="70vh" alignItems="center" justifyContent="center">
               <Flex direction="column" background="gray.100" p={12} rounded={6}>
-                <Input
-                  alignItems="center"
-                  mb={6}
-                  variant="filled"
-                  type="text"
-                  value={filter?._id}
-                  onChange={(e) => filterIdBookForDelete(e.target.value)}
-                />
                 <div>
                   <Button
                     alignItems="center"

@@ -1,7 +1,7 @@
 import { Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import DataTableAuthors from "../components/DataTableAuthors"
+import ContainerListAuthors from "../components/ContainerListAuthors";
 
 export default function AuthorList () {
     return (
@@ -13,7 +13,7 @@ export default function AuthorList () {
             <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">List of the Authors in Library App</Heading>
             <Navbar />
             
-            <DataTableAuthors />
+            <ContainerListAuthors />
         </>
     )
 }

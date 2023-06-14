@@ -34,12 +34,12 @@ export const UPDATE_AUTHOR = gql`
 `
 //Función para eliminar algún Author que se encuentre en la DB 
 export const DELETE_AUTHOR = gql`
-    mutation Author_delete($id: ID!){
-        Author_delete(_id: $id){
-            _id
-        }
+   mutation Author_delete($id: [String]) {
+        Author_delete(_id: $id)
     }
 `
+
+
 
 //Función que me sirve para llenar un Select con el listado de los Authors por su FullName
 export const AUTHOR_LIST_BY_FULLNAME = gql`
