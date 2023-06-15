@@ -39,6 +39,11 @@ export const DELETE_AUTHOR = gql`
     }
 `
 
+export const DELETE_ALL_AUTHORS = gql`
+    mutation Author_delete($id: [String]){
+        Author_delete(_id: $id)
+    }
+`
 
 
 //Función que me sirve para llenar un Select con el listado de los Authors por su FullName

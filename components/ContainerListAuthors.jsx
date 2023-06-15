@@ -1,6 +1,7 @@
 import React from "react";
 import { useDataTable } from "@codecraftkit/hooks";
 import { useState } from "react";
+import { useDeleteAllAuthors } from "../hooks/useAuthor";
 import { Table } from "@codecraftkit/core";
 import { AUTHOR_LIST } from "../graphql/Author";
 import { Grid, Button } from "@chakra-ui/react";
@@ -15,6 +16,7 @@ const ContainerListAuthors = () => {
   const [authorSelected, setAuthorSelected] = useState({})
   const [openUpdateAuthor, setOpenUpdateAuthor] = useState(false);
   const [openDeleteAuthor, setOpenDeleteAuthor] = useState(false);
+  const {getDeleteAllAuthors} =  useDeleteAllAuthors()
 
   
 
@@ -36,6 +38,18 @@ const ContainerListAuthors = () => {
     setOpenUpdateAuthor(false);
   };
 
+  const dltAllAuthors = async () => {
+    if(selectedRows.length > 0 && selected.length > 0){
+      await getDeleteAllAuthors({
+        variables: {
+          id: selected
+        }
+      }).then(refreshList)
+    }else{
+      setSelected([])
+      setSelectedRows([])
+    }
+  }
 
 
   const initialValues = {}
@@ -78,6 +92,9 @@ const ContainerListAuthors = () => {
 
   return (
     <Grid>
+      <Button  width={40} marginLeft={1} colorScheme="red" onClick={dltAllAuthors}>
+        Delete All Authors
+      </Button>
       <Table
       {...dataTable}
       head={head}
