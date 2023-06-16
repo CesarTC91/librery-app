@@ -14,24 +14,20 @@ export const BOOK_LIST = gql`
 `
 
 //Funcion que crea los Books
-export const CREATE_BOOK = gql`
-    mutation Book_create($book: Book_input){
-       Book_create(book: $book){
-            title
+export const CREATE_AND_UPDATE_BOOK = gql`
+      mutation Book_save($book: Book_input){
+        Book_save(book: $book){
+            title 
             authorId
-       }
+        }
     }
 `
 
 
 //Funcion que actualiza los Books 
 export const UPDATE_BOOK = gql`
-    mutation Book_update($book: Book_input){
-        Book_update(book: $book){
-            _id
-            title
-            authorId
-        }
+    mutation Book_save($book: Book_input){
+        Book_save(book: $book)
     }
 `
 
