@@ -86,6 +86,10 @@ export default function AddBook() {
                             })}
                         </Select>
                     </div>
+                    <div>
+                        <Text mb={6}>Book Cover</Text>
+                        <Input mb={6} variant="filled" placeholder="Book Cover" type="file" />
+                    </div>
                     <Button mb={6} colorScheme="teal" onClick={savedBook}>Add Book</Button>
                 </Flex>
             </Flex>

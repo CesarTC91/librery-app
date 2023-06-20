@@ -7,6 +7,7 @@ import { BOOK_LIST } from "../graphql/Book";
 import { Grid, Button } from "@chakra-ui/react";
 import { MdEditDocument } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
+import {GiBookCover} from 'react-icons/gi'
 import FormUpdateBook from "./FormUpdateBooks";
 import DeleteBooks from "./DeleteBooks";
 
@@ -17,9 +18,8 @@ const ContainerListBook = () => {
   const [selected, setSelected] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
   const {getDeleteAllBooks} = useDeleteAllBooks()
+ 
   
-
-
   const openUpdateForm = (book) => {
     setBookSelected(book)
     setOpenFormUpdate(true);
@@ -34,7 +34,7 @@ const ContainerListBook = () => {
     setOpenDeleteBook(false);
   };
 
-  const closedUpdateForm = (book) => {
+  const closedUpdateForm = () => {
     setOpenFormUpdate(false);
   };
 
@@ -50,6 +50,7 @@ const ContainerListBook = () => {
       setSelectedRows([])
     }
   }
+
 
 
   const initialValues = {}
@@ -76,7 +77,7 @@ const ContainerListBook = () => {
     icon: <BsTrash />,
     handler: (book) => openBookDelete(book)
   }
-]
+  ]
 
   const useDataTableProps = {
     initialValues, 
