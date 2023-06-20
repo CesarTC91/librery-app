@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Heading, Flex, Input, Button, Text, Select } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { useAuthorListByFullname } from '../hooks/useAuthor'
-import { useCreateBook } from "../hooks/useBook";
+import { useCreateAndUptadeBook } from "../hooks/useBook";
 import { useState, useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
 
@@ -12,7 +12,7 @@ export default function AddBook() {
 
     const toast = useToast()
   
-    const { getCreateBook, loading: loadingCreate, error: errorCreate, data } = useCreateBook()
+    const { getCreateAndUpdateBook, loading: loadingCreate, error: errorCreate, data } = useCreateAndUptadeBook()
 
     const [book, setBook] = useState({})
 
@@ -21,9 +21,9 @@ export default function AddBook() {
     }
 
     const savedBook = async () => {
-       const res = await getCreateBook({
+       const res = await getCreateAndUpdateBook({
             variables: {
-                book: book
+                book: {...book, _id: ""}
             }
         })
         if(res){

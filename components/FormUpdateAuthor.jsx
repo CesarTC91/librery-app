@@ -11,10 +11,10 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useUpdateAuthors } from "../hooks/useAuthor";
+import { useCreateAndUpdateAuthor } from "../hooks/useAuthor";
 
 const UpdateAuthor = ({ auhtorSelected, refreshList, openAuthorUpdateForm, closedAuthorUpdateForm }) => {
-  const { getUpdateAuthor } = useUpdateAuthors();
+  const { getCreateAndUpdateAuthor } = useCreateAndUpdateAuthor();
 
   const [updateAuthor, setUpdateAuthor] = useState({});
 
@@ -23,7 +23,7 @@ const UpdateAuthor = ({ auhtorSelected, refreshList, openAuthorUpdateForm, close
   };
 
   const authUpdate = async () => {
-    await getUpdateAuthor({
+    await getCreateAndUpdateAuthor({
       variables: {
         author: updateAuthor,
       },
@@ -57,17 +57,6 @@ const UpdateAuthor = ({ auhtorSelected, refreshList, openAuthorUpdateForm, close
           <ModalBody>
             <Flex height="70vh" alignItems="center" justifyContent="center">
               <Flex direction="column" background="gray.100" p={12} rounded={6}>
-                <div>
-                  <Text mb={6}>Id of the Author</Text>
-                  <Input
-                    placeholder="Id of the Author"
-                    variant="filled"
-                    value={authorUpdate?._id}
-                    mb={6}
-                    type="text"
-                    onChange={(e) => authorUpdate("_id", e.target.value)}
-                  />
-                </div>
                 <div>
                   <Text mb={6}>First Name of the Author</Text>
                   <Input

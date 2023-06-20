@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from "@apollo/client"
-import { AUTHOR_LIST, CREATE_AUTHOR, AUTHOR_LIST_BY_FULLNAME, UPDATE_AUTHOR, DELETE_AUTHOR, DELETE_ALL_AUTHORS } from "../graphql/Author"
+import { AUTHOR_LIST, CREATE_AND_UPDATE_AUTHOR, AUTHOR_LIST_BY_FULLNAME,  DELETE_AUTHOR, DELETE_ALL_AUTHORS } from "../graphql/Author"
 import { useEffect } from "react"
 
 //Hook para carga la data de todos los Authors
@@ -13,19 +13,14 @@ export const useAuthorList = () => {
     return { loading, error, data, getAuthors, refetch }
 }
 
-// Hook para crear Authors 
-export const useCreateAuthor = () => {
-    const [getCreateAuthor, { loading, error, data }] = useMutation(CREATE_AUTHOR)
+// Hook para crear Authors y modificar Authors
+export const useCreateAndUpdateAuthor = () => {
+    const [getCreateAndUpdateAuthor, { loading, error, data }] = useMutation(CREATE_AND_UPDATE_AUTHOR)
 
-    return { getCreateAuthor, loading, error, data }
+    return { getCreateAndUpdateAuthor, loading, error, data }
 }
 
-//Hook para actualizar Authors
-export const useUpdateAuthors = () => {
-    const [getUpdateAuthor, { loading, error, data }] = useMutation(UPDATE_AUTHOR)
 
-    return { getUpdateAuthor, loading, error, data }
-}
 
 //Hook para eleminar Authors
 export const useDeleteAuthors = () => {

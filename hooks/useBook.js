@@ -15,17 +15,13 @@ export const useBookList = () => {
     
 }
 
-export const useCreateBook = () => {
-    const [getCreateBook, {loading, error, data}] = useMutation(CREATE_AND_UPDATE_BOOK)
+export const useCreateAndUptadeBook = () => {
+    const [getCreateAndUpdateBook, {loading, error, data}] = useMutation(CREATE_AND_UPDATE_BOOK)
 
-    return {getCreateBook, loading, error, data}
+    return {getCreateAndUpdateBook, loading, error, data}
 }
 
-export const useUpdateBook = () => {
-    const [getUpdateBook, {loading, error, data}] = useMutation(CREATE_AND_UPDATE_BOOK)
 
-    return {getUpdateBook, loading, error, data}
-}
 
 export const useDeleteBook = () => {
     const [getDeleteBook, {loading, error, data}] = useMutation(DELETE_BOOK)

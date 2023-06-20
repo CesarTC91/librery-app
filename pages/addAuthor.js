@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { Heading, Flex, Input, Text, Button } from '@chakra-ui/react'
 import Navbar from '../components/Navbar'
-import { useCreateAuthor } from '../hooks/useAuthor'
+import { useCreateAndUpdateAuthor } from '../hooks/useAuthor'
 import { useState } from 'react'
 import { useToast } from '@chakra-ui/react'
 
 export default function AddAuthor (){
-    const { getCreateAuthor, loading, error } = useCreateAuthor();
+    const { getCreateAndUpdateAuthor, loading, error } = useCreateAndUpdateAuthor();
 
     const toast = useToast()
 
@@ -19,9 +19,9 @@ export default function AddAuthor (){
     }
 
     const savedAuthor = async () => {
-      const res = await getCreateAuthor({
+      const res = await getCreateAndUpdateAuthor({
             variables: {
-                author: author
+                author: {...author, _id: ""}
             }
         })
         if(res){

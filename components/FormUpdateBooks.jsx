@@ -12,11 +12,11 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { useUpdateBook } from "../hooks/useBook";
+import { useCreateAndUptadeBook } from "../hooks/useBook";
 import { useAuthorListByFullname } from "../hooks/useAuthor";
 
 const FormUpdateBook = ({ bookSelected, refreshList, openFormUpdate, closedUpdateForm  }) => {
-  const { getUpdateBook } = useUpdateBook();
+  const { getCreateAndUpdateBook } = useCreateAndUptadeBook();
 
   const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
   const [updateBook, setUpdateBook] = useState({});
@@ -35,7 +35,7 @@ const FormUpdateBook = ({ bookSelected, refreshList, openFormUpdate, closedUpdat
   }
 
   const bkUpdate = async () => {
-    await getUpdateBook({
+    await getCreateAndUpdateBook({
       variables: {
         book: updateBook,
       },
