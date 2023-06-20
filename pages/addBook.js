@@ -11,6 +11,8 @@ export default function AddBook() {
     const { getAuthorsByFullname, loading, error, data: authorByFullNameList } = useAuthorListByFullname();
 
     const toast = useToast()
+
+    const [coverImg, setCoverImg] = useState("")
   
     const { getCreateAndUpdateBook, loading: loadingCreate, error: errorCreate, data } = useCreateAndUptadeBook()
 
@@ -19,6 +21,7 @@ export default function AddBook() {
     const addBook = (field, value) => {
         setBook({ ...book, [field]: value })
     }
+
 
     const savedBook = async () => {
        const res = await getCreateAndUpdateBook({
@@ -85,10 +88,6 @@ export default function AddBook() {
                                 return <option key={index} value={authorFullName._id}>{authorFullName.fullName}</option>
                             })}
                         </Select>
-                    </div>
-                    <div>
-                        <Text mb={6}>Book Cover</Text>
-                        <Input mb={6} variant="filled" placeholder="Book Cover" type="file" />
                     </div>
                     <Button mb={6} colorScheme="teal" onClick={savedBook}>Add Book</Button>
                 </Flex>

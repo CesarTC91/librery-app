@@ -18,7 +18,7 @@ const ContainerListBook = () => {
   const [selected, setSelected] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
   const {getDeleteAllBooks} = useDeleteAllBooks()
- 
+
   
   const openUpdateForm = (book) => {
     setBookSelected(book)
@@ -76,8 +76,13 @@ const ContainerListBook = () => {
     label: 'DELETE',
     icon: <BsTrash />,
     handler: (book) => openBookDelete(book)
+  },
+  {
+    color: 'green',
+    label: 'VIEW COVER',
+    icon: <GiBookCover />
   }
-  ]
+]
 
   const useDataTableProps = {
     initialValues, 
