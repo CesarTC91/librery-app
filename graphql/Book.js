@@ -17,17 +17,10 @@ export const BOOK_LIST = gql`
 export const CREATE_AND_UPDATE_BOOK = gql`
       mutation Book_save($book: Book_input){
         Book_save(book: $book){
+            _id
             title 
             authorId
         }
-    }
-`
-
-
-//Funcion que actualiza los Books 
-export const UPDATE_BOOK = gql`
-    mutation Book_save($book: Book_input){
-        Book_save(book: $book)
     }
 `
 
