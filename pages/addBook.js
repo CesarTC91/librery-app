@@ -12,8 +12,6 @@ export default function AddBook() {
 
     const toast = useToast()
 
-    const [coverImg, setCoverImg] = useState("")
-  
     const { getCreateAndUpdateBook, loading: loadingCreate, error: errorCreate, data } = useCreateAndUptadeBook()
 
     const [book, setBook] = useState({})
