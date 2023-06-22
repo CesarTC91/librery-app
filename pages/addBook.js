@@ -70,6 +70,7 @@ export default function AddBook() {
     return <p>Error Creating Book Data</p>;
   }
 
+
   return (
     <>
       <Head>
