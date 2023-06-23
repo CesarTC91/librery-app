@@ -76,11 +76,6 @@ const ContainerListBook = () => {
     label: 'DELETE',
     icon: <BsTrash />,
     handler: (book) => openBookDelete(book)
-  },
-  {
-    color: 'green',
-    label: 'VIEW COVER',
-    icon: <GiBookCover />
   }
 ]
 
@@ -95,9 +90,6 @@ const ContainerListBook = () => {
 
   return (
     <Grid>
-      <Button  width={40} marginLeft={1} colorScheme="red" onClick={deleteAllBooks}>
-        Delete All Books
-      </Button>
         <Table {...dataTable}
         head={head}
         actions={actions}
@@ -108,6 +100,9 @@ const ContainerListBook = () => {
         setSelectedRows={setSelectedRows}   />
         <FormUpdateBook openFormUpdate={openFormUpdate} bookSelected={bookSelected} refreshList={refreshList} closedUpdateForm={closedUpdateForm} />
         <DeleteBooks openDeleteBook={openDeleteBook} bookSelected={bookSelected} refreshList={refreshList} closedBookDelete={closedBookDelete} />
+        <Button  width={40} marginLeft={1} colorScheme="red" onClick={deleteAllBooks}>
+        Delete All Books
+        </Button>
     </Grid>
   )
 }

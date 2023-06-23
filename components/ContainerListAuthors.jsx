@@ -92,9 +92,6 @@ const ContainerListAuthors = () => {
 
   return (
     <Grid>
-      <Button  width={40} marginLeft={1} colorScheme="red" onClick={dltAllAuthors}>
-        Delete All Authors
-      </Button>
       <Table
       {...dataTable}
       head={head}
@@ -107,6 +104,9 @@ const ContainerListAuthors = () => {
       />
       <UpdateAuthor openAuthorUpdateForm={openUpdateAuthor} auhtorSelected={authorSelected} refreshList={refreshList} closedAuthorUpdateForm={closedAuthorUpdateForm} />
       <AuthorDelete openAuthorDelete={openDeleteAuthor} authorSelected={authorSelected} refreshList={refreshList} closedAuthorDelete={closedAuthorDelete} />
+      <Button  width={40} marginLeft={1} colorScheme="red" onClick={dltAllAuthors}>
+        Delete All Authors
+      </Button>
     </Grid>
   )
 }
