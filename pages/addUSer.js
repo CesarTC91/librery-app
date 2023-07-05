@@ -1,45 +1,53 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Heading, Flex, Text, Input, Button, Toast } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import {useCreateUser} from '../hooks/useUser'
+import { useCreateUser } from "../hooks/useUser";
 
+const AddUser = () => {
+  const { getCreateUser } = useCreateUser();
 
-export default function AddUser () {
-  const {getCreateUser} = useCreateUser()
+  const [loadingSaved, setLoadingSaved] = useState(false)
 
-  const toast = useToast()
+  const router = useRouter();
 
-  const [user, setUser] = useState({})
+  const toast = useToast();
+
+  const [user, setUser] = useState({});
 
   const addUser = (field, value) => {
-    setUser({...user, [field]: value})
-  }
+    setUser({ ...user, [field]: value });
+  };
 
   const savedUser = async () => {
+    setLoadingSaved(true)
     const res = await getCreateUser({
       variables: {
-        user: {...user}
-      }
+        user: { ...user },
+      },
     });
-    if(res){
-      if(res.errors){
+    if (res) {
+      if (res.errors) {
         toast({
-          title: 'THE_USER_COULD_NOT_BE_REGISTERED', 
-          description: `${res.message}`, 
-          status: "error", 
-          duration: 1500, 
-          isClosable: true, 
-          position: "top"
+          title: "THE_USER_COULD_NOT_BE_REGISTERED",
+          description: `${res.message}`,
+          status: "error",
+          duration: 1500,
+          isClosable: true,
+          position: "top",
         });
-      }else{
+        setLoadingSaved(false)
+      } else {
         toast({
-          title: "SUCCESS", 
-          description: "USER_SUCCESSFULLY_REGISTERED", 
+          title: "SUCCESS",
+          description: "USER_SUCCESSFULLY_REGISTERED",
           status: "success",
-          duration: 1500, 
-          position: "top"
-        })
+          duration: 1500,
+          position: "top",
+        });
+        setLoadingSaved(false)
+        router.push("/bookList");
       }
     }
   };
@@ -50,8 +58,13 @@ export default function AddUser () {
         <title>Register and Login Library App</title>
       </Head>
 
-      <Heading textAlign="center" backgroundColor="whiteAlpha.200" color="blackAlpha.500">Register User</Heading>
-
+      <Heading
+        textAlign="center"
+        backgroundColor="whiteAlpha.200"
+        color="blackAlpha.500"
+      >
+        Register User
+      </Heading>
 
       <Flex height="70vh" mt={20} alignItems="center" justifyContent="center">
         <Flex direction="column" background="gray.100" p={12} rounded={6}>
@@ -60,7 +73,7 @@ export default function AddUser () {
           </Heading>
           <div>
             <Text mb={6}>User's first name</Text>
-            <Input 
+            <Input
               placeholder="First name user"
               variant="filled"
               type="text"
@@ -70,7 +83,7 @@ export default function AddUser () {
           </div>
           <div>
             <Text mb={6}>User's last name</Text>
-            <Input 
+            <Input
               placeholder="Last name user"
               variant="filled"
               type="text"
@@ -80,17 +93,17 @@ export default function AddUser () {
           </div>
           <div>
             <Text mb={6}>User's age</Text>
-            <Input 
+            <Input
               placeholder="User's age"
               variant="filled"
               type="number"
               mb={6}
-              onChange={(e) => addUser("age", e.target.value)}
+              onChange={(e) => addUser("age", parseInt(e.target.value))}
             />
           </div>
           <div>
             <Text mb={6}>User name</Text>
-            <Input 
+            <Input
               placeholder="Enter a user name"
               variant="filled"
               type="text"
@@ -100,7 +113,7 @@ export default function AddUser () {
           </div>
           <div>
             <Text mb={6}>User's email</Text>
-            <Input 
+            <Input
               placeholder="User's email"
               variant="filled"
               type="email"
@@ -110,7 +123,7 @@ export default function AddUser () {
           </div>
           <div>
             <Text mb={6}>User password</Text>
-            <Input 
+            <Input
               placeholder="User password"
               variant="filled"
               type="password"
@@ -118,11 +131,13 @@ export default function AddUser () {
               onChange={(e) => addUser("password", e.target.value)}
             />
           </div>
-          <Button mb={6} colorScheme="teal" onClick={savedUser}>
+          <Button mb={6} colorScheme="teal" onClick={savedUser} disabled={loadingSaved}>
             Register User
           </Button>
         </Flex>
       </Flex>
     </>
-  )
-}
+  );
+};
+
+export default AddUser;
