@@ -16,9 +16,11 @@ const Login = () => {
     });
   };
 
-  const handleSendLogin = (e) => {
+  const handleSendLogin = async (e) => {
     e.preventDefault();
     console.log(credentials);
+    const response = await axios.post('/api/auth/login', credentials)
+    console.log(response)
   };
 
   return (

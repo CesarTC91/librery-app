@@ -45,7 +45,7 @@
     "graphql-ws": "^5.11.2",
     "is-electron": "^2.2.1",
     "isomorphic-unfetch": "^3.1.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.1",
     "linkify-react": "^4.0.2",
     "linkifyjs": "^4.0.2",
     "moment": "^2.29.4",
