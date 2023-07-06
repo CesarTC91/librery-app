@@ -47,7 +47,7 @@ const AddUser = () => {
           position: "top",
         });
         setLoadingSaved(false)
-        router.push("/bookList");
+        router.push("/phrases");
       }
     }
   };
